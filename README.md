@@ -111,7 +111,8 @@ public class Worker {
 ### Пример работа:
 1. Создаем конфигурацию для запуска нескольких Consumer сразу:
    ![Конфигурация](image/4.png)
-2. Запускаем Consumer и Producer:
+2. Запускаем Consumer и Producer: 
+   
    ![Отправка сообщений](image/1.png)
    ![Получение_1](image/2.png)
    ![Получение 2](image/3.png)
@@ -166,15 +167,13 @@ public class Publisher {
 }
 ```
 2. Создадим класс Subscriber:
-   ```Java
-   package org.example;
-
+```Java
+package org.example;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
-
 
 public class Subscriber {
     private static final String EXCHANGE_NAME = "logs";
@@ -187,20 +186,16 @@ public class Subscriber {
 
             channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
-
             String queueName = channel.queueDeclare().getQueue();
-
 
             channel.queueBind(queueName, EXCHANGE_NAME, "");
 
             System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
-
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), "UTF-8");
                 System.out.println(" [x] Received '" + message + "'");
             };
-
 
             channel.basicConsume(queueName, true, deliverCallback, consumerTag -> {});
             
@@ -208,11 +203,16 @@ public class Subscriber {
         }
     }
 }
+
 ```
 3. Запускаем Publisher и 2 Subcriber:
-![Запуск_пабл](image/5.png)
-![Запук_саб_1](image/6.png)
-![Запук_саб_2](image/7.png)
 
-4. Запускаем 3-го Subcsriber:
-![Запуск_саб_3](imagе/8.png)
+    ![Запуск_пабл](image/5.png)
+   
+    ![Запук_саб_1](image/6.png)
+   
+    ![Запук_саб_2](image/7.png) 
+
+4. Запускаем 3-го Subcsriber: 
+   
+    ![Запук_саб_3](image/8.png) 
